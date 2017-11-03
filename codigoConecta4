@@ -1,0 +1,98 @@
+package com.company;
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+        //Presentacion modo de juego
+        System.out.println("Bienvenido a jugar Conecta4 version ");
+        String n1,n2, turno,eleccion;// variable nombre jugador
+        int jugada=0,c1=5;
+        int control[]= {5,5,5,5,5,5,5};
+        int numero=0;// control si ingresa numero
+        Scanner leer = new Scanner(System.in);
+        System.out.println("ingrese Nombre jugador 1");
+        n1=leer.nextLine();
+        System.out.println("ingrese Nombre jugador 2");
+        n2= leer.nextLine();
+        System.out.println("Good luck and enjoy the game ");
+        System.out.println("Bienvenido jugador 1: "+n1+" y jugador 2:"+n2);
+        turno=n1;
+        int tablero [][] ;
+        tablero= new int[6][7];
+        for (int i=0; i<6; i++){
+            for (int j=0; j<7; j++) {
+                tablero[i][j]= 0;
+            }
+        }
+        CrearTablero(tablero);
+        boolean juego= true;
+        while (juego!= false) {
+            boolean pideNumero = true;
+                while (pideNumero ) {
+                    System.out.println(turno + " ingresa que columna quieres jugar del 1 al 7 ");
+                    String entrada = leer.nextLine();
+                    if (entrada.matches("\\d{1}")) {  // si escribio 1 o 2 digitos
+                        numero = Integer.parseInt(entrada);
+                        pideNumero = numero < 0 && numero >= 7;
+                    }
+                }
+                System.out.println(numero);
+                switch (numero) {
+                    case 1:jugada = 1;break;
+                    case 2:jugada = 2;break;
+                    case 3:jugada = 3;break;
+                    case 4:jugada = 4;break;
+                    case 5:jugada = 5;break;
+                    case 6:jugada = 6;break;
+                    case 7:jugada = 7;break;
+                    default:
+                        jugada = 0;
+                        System.out.println("No es una columna valida, ingresa que columna quieres jugar del 1 al 7  ");
+                        break;
+                }
+            int fila=control[jugada-1];
+            if (control[jugada-1]>=0) {
+                if (jugada != 0) {
+                    for (int i = 0; i <= fila; i++) {
+                        for (int j = 0; j < 7; j++) {
+                            if (j == jugada - 1 && i == fila && turno == n1) {
+                                tablero[i][j] = 1;
+                                control[j] = (control[j] - 1);
+                            }
+                            if (j == jugada - 1 && i == fila && turno == n2) {
+                                tablero[i][j] = 2;
+                                control[j] = (control[j] - 1);
+                            }
+                        }
+                    }
+                }
+                if (turno==n1)
+                {
+                    turno=n2;
+                }else turno=n1;
+            }else{System.out.println("No es una columna valida, se encuentra llena elija otra  ");}
+            CrearTablero(tablero);
+        }
+
+
+
+    }
+
+    public static void CrearTablero(int tablero [][]){
+        int colum=0, fila=0;
+        for (int i=0; i<6; i++) {
+            for (int j = 0; j < 7; j++) {
+                if (fila==i & colum==j) System.out.print("|"+"1"+"|\t");
+                if (fila==i & colum==j) System.out.print("|"+"2"+"|\t");
+                if (fila==i & colum==j) System.out.print("|"+"3"+"|\t");
+                if (fila==i & colum==j) System.out.print("|"+"4"+"|\t");
+                if (fila==i & colum==j) System.out.print("|"+"5"+"|\t");
+                if (fila==i & colum==j) System.out.print("|"+"6"+"|\t");
+                if (fila==i & colum==j) System.out.println("|"+"7"+"|");
+                System.out.print("|"+ tablero[i][j] + "|\t");
+                //System.out.print("|"+i+j+"|\t");
+            }
+            System.out.println();
+        }
+    }
